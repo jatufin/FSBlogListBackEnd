@@ -10,8 +10,8 @@ const blogs = [
 ]
 
 describe('favoriteBlog', () => {
-  test('of empty list is empty object', () => {
-    expect(totalLikes([])).toEqual({})
+  test('of empty list is undefined', () => {
+    expect(totalLikes([])).toBe(undefined)
   })
 
   test(' when list has only one blog equals to that', () => {
