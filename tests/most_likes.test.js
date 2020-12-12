@@ -6,7 +6,7 @@ describe('mostLikes', () => {
     expect(mostLikes([])).toBe(undefined)
   })
 
-  test(' when list has only one blog equals to that', () => {
+  test('when list has only one blog equals to that', () => {
     expect(mostLikes([blogs[0]])).toEqual({
       author: "Michael Chan",
       likes: 7

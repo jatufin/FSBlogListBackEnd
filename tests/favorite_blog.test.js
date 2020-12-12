@@ -7,8 +7,9 @@ describe('favoriteBlog', () => {
     expect(totalLikes([])).toBe(undefined)
   })
 
-  test(' when list has only one blog equals to that', () => {
-    expect(totalLikes([blogs[0]])).toEqual({
+  test('when list has only one blog equals to that', () => {
+    expect(totalLikes([blogs[0]])).toEqual(
+    {
       title: "React patterns",
       author: "Michael Chan",
       likes: 7
@@ -16,7 +17,8 @@ describe('favoriteBlog', () => {
   })
 
   test('of a bigger list returns correct item', () => {
-    expect(totalLikes(blogs)).toEqual({
+    expect(totalLikes(blogs)).toEqual(
+    {
       title: "Canonical string reduction",
       author: "Edsger W. Dijkstra",
       likes: 12
