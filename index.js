@@ -17,7 +17,7 @@ const blogSchema = mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema)
 
-const mongoUrl = 'mongodb://localhost/bloglist'
+// const mongoUrl = 'mongodb://localhost/bloglist'
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
@@ -30,6 +30,7 @@ app.use(cors())
 app.use(express.json())
 
 app.get('/api/blogs', (request, response) => {
+    console.log('GET!')
     Blog
         .find({})
         .then(blogs => {
@@ -38,6 +39,7 @@ app.get('/api/blogs', (request, response) => {
 })
 
 app.post('/api/blogs', (request, response) => {
+    console.log('POST!')
     const blog = new Blog(request.body)
 
     blog
