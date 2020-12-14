@@ -1,5 +1,5 @@
 const mostLikes = require('../utils/list_helper').mostLikes
-const blogs = require('./test_data')
+const initialBlogs = require('./test_data').initialBlogs
 
 describe('mostLikes', () => {
   test('of empty list is undefined', () => {
@@ -7,14 +7,16 @@ describe('mostLikes', () => {
   })
 
   test('when list has only one blog equals to that', () => {
-    expect(mostLikes([blogs[0]])).toEqual({
+    expect(mostLikes([initialBlogs[0]])).toEqual(
+    {
       author: "Michael Chan",
       likes: 7
     })
   })
 
   test('of a bigger list returns correct item', () => {
-    expect(mostLikes(blogs)).toEqual({
+    expect(mostLikes(initialBlogs)).toEqual(
+    {
       author: "Edsger W. Dijkstra",
       likes: 17
     })

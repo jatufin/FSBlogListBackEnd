@@ -1,6 +1,6 @@
 const totalLikes = require('../utils/list_helper').favoriteBlog
 
-const blogs = require('./test_data')
+const initialBlogs = require('./test_data').initialBlogs
 
 describe('favoriteBlog', () => {
   test('of empty list is undefined', () => {
@@ -8,7 +8,7 @@ describe('favoriteBlog', () => {
   })
 
   test('when list has only one blog equals to that', () => {
-    expect(totalLikes([blogs[0]])).toEqual(
+    expect(totalLikes([initialBlogs[0]])).toEqual(
     {
       title: "React patterns",
       author: "Michael Chan",
@@ -17,7 +17,7 @@ describe('favoriteBlog', () => {
   })
 
   test('of a bigger list returns correct item', () => {
-    expect(totalLikes(blogs)).toEqual(
+    expect(totalLikes(initialBlogs)).toEqual(
     {
       title: "Canonical string reduction",
       author: "Edsger W. Dijkstra",
