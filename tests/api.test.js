@@ -44,7 +44,7 @@ describe('API tests', () => {
     await api
       .post('/api/blogs')
       .send(newBlog)
-      .expect(201)
+      .expect(200)
       .expect('Content-Type', /application\/json/)
 
     const response = await api.get('/api/blogs')
@@ -52,6 +52,20 @@ describe('API tests', () => {
   
     const titles = response.body.map(r => r.title)
     expect(titles).toContain(newBlog.title)
+  })
+
+  test('missing number of likes is zero', async () => {
+    const newBlog = {
+      title: 'Bad astronomy',
+      author: 'Phil Plait',
+      url: 'https://www.syfy.com/tags/bad-astronomy'
+    }
+
+    const response = await api
+      .post('/api/blogs')
+      .send(newBlog)
+
+    expect(response.body.likes).toBe(0)
   })
 })
 
