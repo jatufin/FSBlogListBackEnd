@@ -19,11 +19,18 @@ describe('API tests', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
   })
-  
+
   test('all blogs are returned', async () => {
     const response = await api.get('/api/blogs')
     
     expect(response.body).toHaveLength(initialBlogs.length)
+  })
+
+  test('every record has field named "id"', async () => {
+    const response = await api.get('/api/blogs')
+    response.body.forEach(item => {
+      expect(item.id).toBeDefined() 
+    })
   })
 })
 
