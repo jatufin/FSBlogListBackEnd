@@ -10,6 +10,7 @@ const Blog = require('../models/blog')
 beforeEach(async () => {
   await Blog.deleteMany({})
   await Blog.insertMany(initialBlogs)
+  console.log("INIT")
 })
 
 describe('API tests', () => {
@@ -54,7 +55,33 @@ describe('API tests', () => {
     expect(titles).toContain(newBlog.title)
   })
 
-  test('missing number of likes is zero', async () => {
+  test('invalid blog entry is rejected', async () => {
+    // title is missing
+    let newBlog = {
+      author: 'Phil Plait',
+      url: 'https://www.syfy.com/tags/bad-astronomy',
+      likes: 0
+    }
+    await api.post('/api/blogs').send(newBlog).expect(400)
+    
+    // url is missing
+    newBlog = {
+      title: 'Bad astronomy',
+      author: 'Phil Plait',
+      likes: 0
+    }
+    await api.post('/api/blogs').send(newBlog).expect(400)
+    
+    // title and url is missing
+    newBlog = {
+      author: 'Phil Plait',
+      likes: 0
+    }
+    await api.post('/api/blogs').send(newBlog).expect(400)
+    
+  })
+
+  test('missing number of likes is given value zero', async () => {
     const newBlog = {
       title: 'Bad astronomy',
       author: 'Phil Plait',

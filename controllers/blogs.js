@@ -13,6 +13,10 @@ blogsRouter.get('/', async (request, response, next) => {
 blogsRouter.post('/', async (request, response) => {
     const body = request.body
     
+    if(!body.title || !body.url) {
+        response.status(400)
+    }
+    
     if(!body.likes) {
         body.likes = 0
     }
