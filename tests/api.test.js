@@ -32,6 +32,27 @@ describe('API tests', () => {
       expect(item.id).toBeDefined() 
     })
   })
+
+  test('a blog can be added', async () => {
+    const newBlog = {
+      title: 'Bad astronomy',
+      author: 'Phil Plait',
+      url: 'https://www.syfy.com/tags/bad-astronomy',
+      likes: 0
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const response = await api.get('/api/blogs')
+    expect(response.body).toHaveLength(initialBlogs.length + 1)
+  
+    const titles = response.body.map(r => r.title)
+    expect(titles).toContain(newBlog.title)
+  })
 })
 
 afterAll(() => {
