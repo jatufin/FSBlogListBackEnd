@@ -1,4 +1,6 @@
 const initialBlogs = require('./test_data').initialBlogs
+const blogsInDb = require('./test_data').blogsInDb
+
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
@@ -10,7 +12,6 @@ const Blog = require('../models/blog')
 beforeEach(async () => {
   await Blog.deleteMany({})
   await Blog.insertMany(initialBlogs)
-  console.log("INIT")
 })
 
 describe('API tests', () => {
@@ -93,6 +94,23 @@ describe('API tests', () => {
       .send(newBlog)
 
     expect(response.body.likes).toBe(0)
+  })
+
+  test('an entry can be deleted', async () => {
+    const blogsAtStart = await blogsInDb()
+    const blogToDelete = blogsAtStart[0]
+
+    console.log("DELETE: ", blogToDelete)
+    
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(204)
+    
+    const blogsAtEnd = await blogsInDb()    
+    expect(blogsAtEnd).toHaveLength(blogsAtStart.length - 1)
+
+    const ids = blogsAtEnd.map(b => b.id)
+    expect(ids).not.toContain(blogToDelete.id)
   })
 })
 
