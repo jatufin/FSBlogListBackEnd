@@ -99,8 +99,6 @@ describe('API tests', () => {
   test('an entry can be deleted', async () => {
     const blogsAtStart = await blogsInDb()
     const blogToDelete = blogsAtStart[0]
-
-    console.log("DELETE: ", blogToDelete)
     
     await api
       .delete(`/api/blogs/${blogToDelete.id}`)
@@ -111,6 +109,23 @@ describe('API tests', () => {
 
     const ids = blogsAtEnd.map(b => b.id)
     expect(ids).not.toContain(blogToDelete.id)
+  })
+
+  test('an entry can be modified', async () => {
+    const blogsAtStart = await blogsInDb()
+    const blogToModify = blogsAtStart[0]
+
+    modifiedValue = {
+      likes: blogToModify.likes + 1
+    }
+
+    const response = await api
+      .put(`/api/blogs/${blogToModify.id}`)
+      .send(modifiedValue)
+      .expect(200)
+
+    const modifiedBlog = response.body
+    expect(modifiedBlog.likes).toBe(blogToModify.likes + 1)
   })
 })
 
