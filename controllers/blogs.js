@@ -41,7 +41,7 @@ blogsRouter.post('/', async (request, response) => {
         user: user._id
     })
     const savedBlog = await blog.save()
-    console.log("BLOG ID: ", savedBlog._id)
+
     user.blogs = user.blogs.concat(savedBlog._id)
     await user.save()
 
@@ -54,8 +54,6 @@ blogsRouter.delete('/:id', async (request, response) => {
     if(!request.token || !decodedToken || !decodedToken.id) {
             throw({ name: 'JsonWebTokenError' })
     }
-
-    console.log("REQUEST TOKEN ID: ", decodedToken.id)
 
     const blog = await Blog.findById(request.params.id)
 
