@@ -14,6 +14,10 @@ const errorHandler = (err, req, res, next) => {
     return res.status(401).send({ error: 'invalid token' })
   }
 
+  if(err.name === 'UnauthorizedRequest') {
+    return res.status(401).send({ error: 'unauthorized request' })
+  }
+  
   next(err)
 }
 
